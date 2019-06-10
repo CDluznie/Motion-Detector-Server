@@ -31,13 +31,14 @@ class VideoFeed:
         self.isReading = True
 
     @staticmethod
-    def create(videoSrc):
+    def create(videoSrc, indexFrame=30):
         capture = cv2.VideoCapture(videoSrc)
-        # todo change
-        for _ in range(30):
+	# we can't take the first frame of the capture
+	# because the video peripheral may be need some initialization to produce acceptable frame
+        for _ in range(indexFrame): # Iterate 
             isOpen, firstImg = capture.read()
             if not isOpen:
-                return None
+                raise IOError("video stream '" + str(videoSrc) + "' is not readable")
         motionDetector = MotionDetector.create(firstImg)
         return VideoFeed(capture, motionDetector)
 
