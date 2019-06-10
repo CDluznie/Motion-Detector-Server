@@ -7,7 +7,7 @@ class ReadWriteValue:
 
     def __init__(self):
         self.lock = threading.Lock()
-        self.isUpdated = False
+        self.updateLate = False
 
     def set(self, value):
         with self.lock:
@@ -51,7 +51,7 @@ class VideoFeed:
         self.capture.release()
     
     def webGenerator(self):
-        while True: # todo isReading
+        while self.isReading:
             img = self.currentFrame.get()
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + img + b'\r\n')
