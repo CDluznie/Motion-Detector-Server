@@ -17,4 +17,7 @@ See *requirements.txt* for all dependences
 ## Usage
 
 * Install dependences : pip install -r requirements.txt
-* Run : todo
+* Run : `motion_detector_server.py [--networkDevice NetworkDevice] [--port Port] [--videoDevice VideoDevice]`
+    * *networkDevice* : name of Wi-Fi card (default *wlan0*)
+    * *port* : port of the server (default *80*)
+    * *videoDevice* : index of video device to use (default *0*)
