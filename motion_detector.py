@@ -11,7 +11,7 @@ class MotionDetector:
 		self.minArea = minArea
 
 	@staticmethod
-	def create(firstImg, threshold=45, minArea=500):
+	def create(firstImg, threshold=45, morphoMathKernelSize=9, minArea=500):
 		referenceFrame = MotionDetector.__toGrayImage(MotionDetector.__resizeImage(firstImg))
 		return MotionDetector(referenceFrame, threshold, minArea)
 		
@@ -21,7 +21,7 @@ class MotionDetector:
 		# compute the zone where there is a difference between the current frame and the reference frame
 		diff = cv2.absdiff(self.referenceFrame, gray)
 		_,thresh = cv2.threshold(diff, self.threshold, 255, cv2.THRESH_BINARY)
-		kernel = np.ones((9,9),np.uint8)
+		kernel = np.ones((morphoMathKernelSize,morphoMathKernelSize),np.uint8)
 		objects = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
 		# extact the contours of the objects
 		cnts = [
