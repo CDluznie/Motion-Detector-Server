@@ -27,7 +27,7 @@ if __name__ == '__main__':
 	videoFeed.start()
 
 	# create and run the server
-	server = create_motion_detector_server(__name__, port, videoFeed)
+	server = create_motion_detector_server(__name__, args.port, videoFeed)
 	server.run()
 
 	# close the video feed when the server is stopped

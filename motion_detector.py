@@ -5,7 +5,7 @@ import datetime
 
 class MotionDetector:
 
-	def __init__(self, referenceFrame, threshold, minArea):
+	def __init__(self, referenceFrame):
 		self.referenceFrame = referenceFrame
 
 	@staticmethod
