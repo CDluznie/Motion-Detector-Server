@@ -15,7 +15,7 @@ class Server:
 
 	def run(self):
 		# todo add port constructor 
-		app.run(host='0.0.0.0', port=80)
+		self.app.run(host='0.0.0.0', port=80)
 
 	def add_endpoint(self, endpoint, endpointName, response):
 		self.app.add_url_rule(endpoint, endpointName, EndpointResponse(response))
