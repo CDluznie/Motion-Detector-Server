@@ -7,27 +7,25 @@ class MotionDetector:
 
 	def __init__(self, referenceFrame, threshold, minArea):
 		self.referenceFrame = referenceFrame
-		self.threshold = threshold
-		self.minArea = minArea
 
 	@staticmethod
-	def create(firstImg, threshold=45, morphoMathKernelSize=9, minArea=500):
+	def create(firstImg):
 		referenceFrame = MotionDetector.__toGrayImage(MotionDetector.__resizeImage(firstImg))
-		return MotionDetector(referenceFrame, threshold, minArea)
+		return MotionDetector(referenceFrame)
 		
-	def detect(self, img):
+	def detect(self, img, threshold=45, morphoMathKernelSize=9, minArea=500):
 		frame = MotionDetector.__resizeImage(img)
 		gray = MotionDetector.__toGrayImage(frame)
 		# compute the zone where there is a difference between the current frame and the reference frame
 		diff = cv2.absdiff(self.referenceFrame, gray)
-		_,thresh = cv2.threshold(diff, self.threshold, 255, cv2.THRESH_BINARY)
+		_,thresh = cv2.threshold(diff, threshold, 255, cv2.THRESH_BINARY)
 		kernel = np.ones((morphoMathKernelSize,morphoMathKernelSize),np.uint8)
 		objects = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
 		# extact the contours of the objects
 		cnts = [
 			cnt 
 			for cnt in imutils.grab_contours(cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)) 
-			if cv2.contourArea(cnt) > self.minArea
+			if cv2.contourArea(cnt) > minArea
 		]
 		# draw targets and texts
 		text = "Detected" if len(cnts) > 0 else "None"
