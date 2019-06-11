@@ -9,8 +9,12 @@ So the process work only if the camera is static.
 
 ## Requirements
 
-* todo
+* Flask
+* OpenCV
+
+See *requirements.txt* for all dependences
 
 ## Usage
 
-* todo
+* Install dependences : pip install -r requirements.txt
+* Run : todo
