@@ -35,7 +35,7 @@ class VideoFeed:
         capture = cv2.VideoCapture(videoSrc)
 	# we can't take the first frame of the capture
 	# because the video peripheral may be need some initialization to produce acceptable frame
-        for _ in range(indexFrame): # Iterate 
+        for _ in range(indexFrame):
             isOpen, firstImg = capture.read()
             if not isOpen:
                 raise IOError("video stream '" + str(videoSrc) + "' is not readable")
