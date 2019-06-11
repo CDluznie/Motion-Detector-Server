@@ -15,15 +15,15 @@ def create_motion_detector_server(name, port, videoFeed):
 if __name__ == '__main__':
 
 	parser = argparse.ArgumentParser(description="Launch the motion dection server")
-	parser.add_argument("--device", default="wlan0", help="todo")
-	parser.add_argument("--port", type=int, default=80, help="todo")
-	parser.add_argument("--video", type=int, default=0, help="todo")	
+	parser.add_argument("--networkDevice", default="wlan0", help="name of Wi-Fi card")
+	parser.add_argument("--port", type=int, default=80, help="port of the server")
+	parser.add_argument("--videoDevice", type=int, default=0, help="index of video device to use")	
 	args = parser.parse_args()
 
-	print('PUBLIC SERVER ACCESSIBLE FROM :', utils.get_ip_address(args.device) + ':' + str(args.port))
+	print('PUBLIC SERVER ACCESSIBLE FROM :', utils.get_ip_address(args.networkDevice) + ':' + str(args.port))
 	
 	# launch the video feed
-	videoFeed = VideoFeed.create(args.video)
+	videoFeed = VideoFeed.create(args.videoDevice)
 	videoFeed.start()
 
 	# create and run the server
