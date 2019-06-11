@@ -3,8 +3,8 @@ from flask import Response
 from video_feed import VideoFeed
 import utils
 
-def create_motion_detector_server(name, videoFeed):
-	server = Server(name)
+def create_motion_detector_server(name, port, videoFeed):
+	server = Server(name, port)
 	server.add_endpoint( # show the video feed on the index
 		'/',
 		'index',
@@ -25,8 +25,8 @@ if __name__ == '__main__':
 	videoFeed.start()
 
 	# create and run the server
-	server = create_motion_detector_server(__name__, videoFeed)
+	server = create_motion_detector_server(__name__, port, videoFeed)
 	server.run()
 
-	# stop the video feed when the server is stopped
+	# close the video feed when the server is stopped
 	videoFeed.close()

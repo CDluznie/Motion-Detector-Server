@@ -10,12 +10,12 @@ class EndpointResponse:
 
 class Server:
 
-	def __init__(self, name):
+	def __init__(self, name, port):
 		self.app = Flask(name)
+		self.port = port
 
 	def run(self):
-		# todo add port constructor 
-		self.app.run(host='0.0.0.0', port=80)
+		self.app.run(host='0.0.0.0', port=self.port)
 
 	def add_endpoint(self, endpoint, endpointName, response):
 		self.app.add_url_rule(endpoint, endpointName, EndpointResponse(response))
