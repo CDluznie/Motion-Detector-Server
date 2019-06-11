@@ -1,12 +1,11 @@
 from server import Server
 from flask import Response
 from video_feed import VideoFeed
-import atexit
 import utils
 
 def create_motion_detector_server(name, videoFeed):
 	server = Server(name)
-	server.add_endpoint(
+	server.add_endpoint( # show the video feed on the index
 		'/',
 		'index',
 		Response(videoFeed.webGenerator(), mimetype='multipart/x-mixed-replace; boundary=frame'))
