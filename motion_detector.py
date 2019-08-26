@@ -18,20 +18,26 @@ class MotionDetector:
 		ssd_detector.start()
 		return MotionDetector(ssd_detector, category_index)
 		
-	def detect(self, img, width=500):
+	def detect(self, img, width=500, targets={'person', 'dog', 'cat'}):
 		frame = imutils.resize(img, width=width)
-		"""
 		(boxes, scores, classes, number_detected) = self.ssd_detector.detect_objects(frame)
-		# TODO display only person, cat, dog
+		boxes = np.squeeze(boxes)
+		scores = np.squeeze(scores)
+		classes = np.squeeze(classes).astype(np.int32)
+		# get the id of only desired classes		
+		targets_id = {i for i,val in self.category_index.items() if val['name'] in targets}
+		targets_indices = np.argwhere(np.logical_or.reduce([
+			classes == target_id for target_id in targets_id
+		]))
+		# draw the result on the frame
 		vis_utils.visualize_boxes_and_labels_on_image_array(
 			frame,
-			np.squeeze(boxes),
-			np.squeeze(classes).astype(np.int32),
-			np.squeeze(scores),
+			np.squeeze(boxes[targets_indices]),
+			np.squeeze(classes[targets_indices]),
+			np.squeeze(scores[targets_indices]),
 			self.category_index,
 			use_normalized_coordinates=True,
 			line_thickness=8)
-		"""
 		return frame
 
 
