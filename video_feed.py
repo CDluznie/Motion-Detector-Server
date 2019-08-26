@@ -7,7 +7,7 @@ class ReadWriteValue:
 
     def __init__(self):
         self.lock = threading.Lock()
-        self.updateLate = False
+        self.isUpdated = False
 
     def set(self, value):
         with self.lock:
